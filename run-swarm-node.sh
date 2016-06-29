@@ -1,5 +1,6 @@
 #!/bin/sh
 
-JOIN=$1
+LISTEN_ADDRESS=$1
+JOIN=$2
 
-docker swarm join $JOIN:2377
+docker swarm join --listen-addr $LISTEN_ADDRESS:2377 $JOIN:2377

@@ -12,7 +12,7 @@ docker service ls
 docker service tasks nginx
 ```
 
-## WEBサーバ動作確認（上手くいかない）
+## WEBサーバ動作確認
 ```
 curl http://manager
 curl http://node01
