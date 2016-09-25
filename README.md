@@ -74,4 +74,8 @@ tasks.nginx3.     600     IN      A       10.255.0.14
 # -pにコンテナ側のポートだけ書くとpublish portが自動で割り当てられる(30000-32767)
 docker service create --network ingress --name nginx4 --replicas 1 -p 80 nginx
 
+# publish portを取得
+docker service inspect nginx4 --format='{{range .Endpoint.Ports}}{{println .PublishedPort}}{{end}}'
+
+
 
