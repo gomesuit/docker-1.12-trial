@@ -28,7 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision :shell, path: "stop-security.sh"
     host.vm.provision :shell, path: "run-docker.sh"
     host.vm.provision :shell, path: "set-hosts.sh"
-    #host.vm.provision :shell, path: "run-swarm-manager.sh", args: _PRIVATE_IP_ADDRESS
   end
 
   config.vm.define :node01 do |host|
@@ -40,7 +39,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision :shell, path: "stop-security.sh"
     host.vm.provision :shell, path: "run-docker.sh"
     host.vm.provision :shell, path: "set-hosts.sh"
-    #host.vm.provision :shell, path: "run-swarm-node.sh", args: _PRIVATE_IP_ADDRESS + " " +SWARM_MANAGER_ADDRESS
   end
 
   config.vm.define :node02 do |host|
@@ -52,7 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision :shell, path: "stop-security.sh"
     host.vm.provision :shell, path: "run-docker.sh"
     host.vm.provision :shell, path: "set-hosts.sh"
-    #host.vm.provision :shell, path: "run-swarm-node.sh", args: _PRIVATE_IP_ADDRESS + " " +SWARM_MANAGER_ADDRESS
   end
 
 end

@@ -1,5 +1,8 @@
 #!/bin/sh
 
-echo "192.168.33.10 manager" >> /etc/hosts
-echo "192.168.33.20 node01" >> /etc/hosts
-echo "192.168.33.30 node02" >> /etc/hosts
+{
+  echo "192.168.33.10 manager"
+  echo "192.168.33.20 node01"
+  echo "192.168.33.30 node02"
+} >> /etc/hosts
+
