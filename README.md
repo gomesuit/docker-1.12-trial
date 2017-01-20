@@ -1,17 +1,15 @@
 
-# managerで初期化
+# 起動
 ```
-docker swarm init --advertise-addr enp0s8
-```
-
-# nodeで参加
-```
-docker swarm join \
-  --token SWMTKN-1-44lbxizvvl04cw8lmgaz3cznwfv9ksvyy0uwzcthcgo5w9nwfv-aj7ekr3ojj6o7mrfs2nmrwqbw \
-  192.168.33.10:2377
+vagrant up
 ```
 
-# managerでノードの確認
+# ログイン
+```
+vagrant ssh manager
+```
+
+# ノードの確認
 ```
 docker node ls
 ```
@@ -33,9 +31,7 @@ docker service ps nginx
 
 ## WEBサーバ動作確認
 ```
-curl http://manager
-curl http://node01
-curl http://node02
+curl http://192.168.33.10
 ```
 
 # ログの確認(experimental modeのみ)
