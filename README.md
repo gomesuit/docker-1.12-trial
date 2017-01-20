@@ -1,15 +1,34 @@
-# docker-1.12-trial
 
-## node確認
+# managerで初期化
+```
+docker swarm init --advertise-addr eth1
+```
+
+# nodeで参加
+```
+docker swarm join \
+  --token SWMTKN-1-44lbxizvvl04cw8lmgaz3cznwfv9ksvyy0uwzcthcgo5w9nwfv-aj7ekr3ojj6o7mrfs2nmrwqbw \
+  192.168.33.10:2377
+```
+
+# managerでノードの確認
 ```
 docker node ls
 ```
 
-## serviceデプロイと確認
+# サービスの作成
 ```
-docker service create --name nginx --replicas 1 -p 80:80/tcp nginx
+docker service create --name nginx --replicas 1 -p 80:80 nginx
+```
+
+# サービス一覧
+```
 docker service ls
-docker service tasks nginx
+```
+
+# サービスの詳細
+```
+docker service ps nginx
 ```
 
 ## WEBサーバ動作確認
@@ -19,36 +38,33 @@ curl http://node01
 curl http://node02
 ```
 
-# managerで初期化
-docker swarm init --advertise-addr eth1
+# ログの確認(experimental modeのみ)
+```
+docker service logs -f nginx
+```
 
-# nodeで参加
-docker swarm join \
-  --token SWMTKN-1-44lbxizvvl04cw8lmgaz3cznwfv9ksvyy0uwzcthcgo5w9nwfv-aj7ekr3ojj6o7mrfs2nmrwqbw \
-  192.168.33.10:2377
-
-# managerでノードの確認
-docker node ls
-
-# サービスの作成
-docker service create --name nginx --replicas 1 -p 80:80 nginx
-
-# サービス一覧
-docker service ls
-
-# サービスの詳細
-docker service ps nginx
+# リバランス
+```
+docker service update --force nginx
+```
 
 # サービスの削除
+```
 docker service rm nginx
+```
 
 # コンテナの数増加
+```
 docker service scale nginx=3
+```
 
 # コンテナの数増加
+```
 docker service update --replicas=3 nginx
+```
 
 # インスタンスを跨いだコンテナ間の名前解決の確認
+```
 docker network create -d overray test
 docker service create --name nginx1 --network test nginx
 docker service create --name nginx2 --network test nginx
@@ -56,6 +72,7 @@ docker service ls
 docker service ps nginx1
 docker service ps nginx2
 docker exec -it nginx.2.dl7mdhwrlqfd0krz5h9fdkjn5 ping tasks.nginx1
+```
 
 # コンテナ間通信はtasks.<service>で可能
 ```
@@ -82,10 +99,12 @@ tasks.nginx3.     600     IN      A       10.255.0.14
 ```
 
 # -pにコンテナ側のポートだけ書くとpublish portが自動で割り当てられる(30000-32767)
+```
 docker service create --network ingress --name nginx4 --replicas 1 -p 80 nginx
+```
 
 # publish portを取得
+```
 docker service inspect nginx4 --format='{{range .Endpoint.Ports}}{{println .PublishedPort}}{{end}}'
-
-
+```
 

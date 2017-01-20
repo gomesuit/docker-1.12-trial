@@ -1,21 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$script = <<SCRIPT
-sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-systemctl restart sshd
-ifdown eth1
-ifup eth1
-SCRIPT
-
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-
-  config.vm.box = "centos/7"
-  config.ssh.insert_key = false
-  config.vm.provision :shell, inline: $script
+  config.vm.box = "bento/centos-7.2"
+  config.ssh.forward_agent = true
+  config.vm.provision :shell, path: "run-docker.sh"
+  config.vm.provision :shell, path: "set-hosts.sh"
 
   SWARM_MANAGER_ADDRESS = "192.168.33.10"
 
@@ -25,9 +17,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     host.vm.hostname = _HOSTNAME
     host.vm.network "private_network", ip: _PRIVATE_IP_ADDRESS
-    host.vm.provision :shell, path: "stop-security.sh"
-    host.vm.provision :shell, path: "run-docker.sh"
-    host.vm.provision :shell, path: "set-hosts.sh"
   end
 
   config.vm.define :node01 do |host|
@@ -36,9 +25,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     host.vm.hostname = _HOSTNAME
     host.vm.network "private_network", ip: _PRIVATE_IP_ADDRESS
-    host.vm.provision :shell, path: "stop-security.sh"
-    host.vm.provision :shell, path: "run-docker.sh"
-    host.vm.provision :shell, path: "set-hosts.sh"
   end
 
   config.vm.define :node02 do |host|
@@ -47,9 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     host.vm.hostname = _HOSTNAME
     host.vm.network "private_network", ip: _PRIVATE_IP_ADDRESS
-    host.vm.provision :shell, path: "stop-security.sh"
-    host.vm.provision :shell, path: "run-docker.sh"
-    host.vm.provision :shell, path: "set-hosts.sh"
   end
 
 end
