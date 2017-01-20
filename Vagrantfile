@@ -8,7 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "bento/centos-7.2"
   config.ssh.forward_agent = true
   config.vm.provision :shell, path: "run-docker.sh"
-  #config.vm.provision :shell, path: "set-hosts.sh"
 
   SWARM_MANAGER_ADDRESS = "192.168.33.10"
 
