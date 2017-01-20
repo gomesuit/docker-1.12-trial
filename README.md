@@ -29,7 +29,7 @@ docker service ls
 docker service ps nginx
 ```
 
-## WEBサーバ動作確認
+# WEBサーバ動作確認
 ```
 curl http://192.168.33.10
 ```
@@ -61,7 +61,7 @@ docker service update --replicas=3 nginx
 
 # インスタンスを跨いだコンテナ間の名前解決の確認
 ```
-docker network create -d overray test
+docker network create -d overlay test
 docker service create --name nginx1 --network test nginx
 docker service create --name nginx2 --network test nginx
 docker service ls
@@ -96,7 +96,7 @@ tasks.nginx3.     600     IN      A       10.255.0.14
 
 # -pにコンテナ側のポートだけ書くとpublish portが自動で割り当てられる(30000-32767)
 ```
-docker service create --network ingress --name nginx4 --replicas 1 -p 80 nginx
+docker service create --network test --name nginx4 --replicas 1 -p 80 nginx
 ```
 
 # publish portを取得
