@@ -1,7 +1,7 @@
 
 # managerで初期化
 ```
-docker swarm init --advertise-addr eth1
+docker swarm init --advertise-addr enp0s8
 ```
 
 # nodeで参加
