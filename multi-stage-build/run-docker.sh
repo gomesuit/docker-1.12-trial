@@ -7,4 +7,4 @@ systemctl enable docker
 systemctl start docker
 
 usermod -a -G docker vagrant
-
+sysctl -w net.ipv4.ip_forward=1
